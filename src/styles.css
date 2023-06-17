@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+:root {
+  --primary-color: #5832d3;
+  --primary-color-hover: #5f31f7;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--primary-color) !important;
+  --bs-btn-border-color: var(--primary-color) !important;
+  --bs-btn-hover-bg: var(--primary-color) !important;
+  --bs-btn-hover-border-color: var(--primary-color) !important;
+  --bs-btn-active-bg: var(--primary-color) !important;
+  --bs-btn-active-border-color: var(--primary-color) !important;
+  --bs-btn-disabled-color: var(--primary-color) !important;
+  --bs-btn-disabled-border-color: var(--primary-color) !important;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--primary-color) !important;
+  --bs-btn-border-color: var(--primary-color) !important;
+  --bs-btn-hover-bg: var(--primary-color-hover) !important;
+  --bs-btn-hover-border-color: var(--primary-color-hover) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}

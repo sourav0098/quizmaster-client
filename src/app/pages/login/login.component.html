@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="col-md-12 text-center">
+      <img
+        src="../../../assets/logo.png"
+        alt="Quiz Master"
+        width="120"
+        height="120"
+      />
+    </div>
+    <div class="col-md-12 mb-3">
+      <h3>Login</h3>
+    </div>
+  </div>
+  <form
+    class="row g-3 col-md-8 offset-md-2"
+    [formGroup]="loginForm"
+    (ngSubmit)="onLoginFormSubmit()"
+  >
+    <div class="col-12">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Email"
+        autocomplete="username"
+        formControlName="email"
+        [class.is-invalid]="
+          loginForm.get('email')?.errors && loginForm.get('email')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          loginForm.get('email')?.errors && loginForm.get('email')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.email">
+          <small *ngIf="loginForm.get('email')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        formControlName="password"
+        [class.is-invalid]="
+          loginForm.get('password')?.errors &&
+          loginForm.get('password')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          loginForm.get('password')?.errors &&
+          loginForm.get('password')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.password">
+          <small *ngIf="loginForm.get('password')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <button class="btn btn-primary" type="submit">Login</button>
+    </div>
+  </form>
+  <div class="row col-md-8 offset-md-2">
+    <div class="col-md-12 mt-2">
+      <small
+        >Don't have an account?
+        <a routerLink="/register" class="text-decoration-none text-primary"
+          >register</a
+        ></small
+      >
+    </div>
+  </div>
+</div>

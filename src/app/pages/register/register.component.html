@@ -1,0 +1,183 @@
+<div class="container">
+  <div class="row col-md-8 offset-md-2">
+    <div class="col-md-12 text-center">
+      <img
+        src="../../../assets/logo.png"
+        alt="Quiz Master"
+        width="120"
+        height="120"
+      />
+    </div>
+    <div class="col-md-12 mb-3">
+      <h3>Register</h3>
+    </div>
+  </div>
+  <form
+    class="row g-3 col-md-8 offset-md-2"
+    [formGroup]="registerForm"
+    (ngSubmit)="onRegisterFormSubmit()"
+  >
+    <div class="col-md-6">
+      <label for="fname" class="form-label">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="fname"
+        placeholder="First Name"
+        formControlName="fname"
+        [class.is-invalid]="
+          registerForm.get('fname')?.errors &&
+          registerForm.get('fname')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          registerForm.get('fname')?.errors &&
+          registerForm.get('fname')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.fname">
+          <small *ngIf="registerForm.get('fname')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="lname" class="form-label">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lname"
+        placeholder="Last Name"
+        formControlName="lname"
+        [class.is-invalid]="
+          registerForm.get('lname')?.errors &&
+          registerForm.get('lname')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          registerForm.get('lname')?.errors &&
+          registerForm.get('lname')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.lname">
+          <small *ngIf="registerForm.get('lname')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Email"
+        formControlName="email"
+        autocomplete="username"
+        [class.is-invalid]="
+          registerForm.get('email')?.errors &&
+          registerForm.get('email')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          registerForm.get('email')?.errors &&
+          registerForm.get('email')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.email">
+          <small *ngIf="registerForm.get('email')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        placeholder="Password"
+        formControlName="password"
+        autocomplete="new-password"
+        [class.is-invalid]="
+          registerForm.get('password')?.errors &&
+          registerForm.get('password')?.touched
+        "
+      />
+      <div
+        *ngIf="
+          registerForm.get('password')?.errors &&
+          registerForm.get('password')?.touched
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.password">
+          <small *ngIf="registerForm.get('password')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="cpassword" class="form-label">Confirm Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="cpassword"
+        placeholder="Confirm Password"
+        formControlName="cpassword"
+        autocomplete="new-password"
+        [class.is-invalid]="
+          (registerForm.get('cpassword')?.errors &&
+            registerForm.get('cpassword')?.touched) ||
+          registerForm.hasError('passwordMismatch')
+        "
+      />
+      <div
+        *ngIf="
+          registerForm.get('cpassword')?.errors &&
+          (registerForm.get('cpassword')?.touched ||
+            registerForm.get('cpassword')?.dirty)
+        "
+        class="text-danger"
+      >
+        <ng-container *ngFor="let error of customErrorMessages.cpassword">
+          <small *ngIf="registerForm.get('cpassword')?.hasError(error.type)">
+            {{ error.message }}
+          </small>
+        </ng-container>
+      </div>
+      <small
+        *ngIf="
+          registerForm.hasError('passwordMismatch') &&
+          registerForm.get('cpassword')?.touched
+        "
+        class="text-danger"
+      >
+        {{ customErrorMessages.cpassword[1].message }}
+      </small>
+    </div>
+    <div>
+      <button class="btn btn-primary" type="submit">Register</button>
+    </div>
+  </form>
+  <div class="row col-md-8 offset-md-2">
+    <div class="col-md-12 mt-2">
+      <small
+        >Already have an account?
+        <a routerLink="/login" class="text-decoration-none text-primary"
+          >login</a
+        ></small
+      >
+    </div>
+  </div>
+</div>
