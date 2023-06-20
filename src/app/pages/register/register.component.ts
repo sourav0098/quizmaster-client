@@ -8,6 +8,8 @@ import {
   ValidationErrors,
   AbstractControl,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
 import { REGEX_VALIDATOR } from 'src/app/utils/regex';
 
 @Component({
@@ -17,6 +19,7 @@ import { REGEX_VALIDATOR } from 'src/app/utils/regex';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  errorMessage: string = '';
 
   static passwordMatchValidator(
     control: AbstractControl
@@ -31,7 +34,11 @@ export class RegisterComponent {
     return null;
   }
 
-  constructor(private _fb: FormBuilder) {
+  constructor(
+    private _fb: FormBuilder,
+    private _toastr: ToastrService,
+    private _userService: UserService
+  ) {
     this.registerForm = this._fb.group(
       {
         fname: new FormControl('', [
@@ -92,6 +99,17 @@ export class RegisterComponent {
   onRegisterFormSubmit() {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
+      this._userService.registerUser(this.registerForm.value).subscribe({
+        next: (res) => {
+          console.log(res);
+          this.errorMessage = '';
+          this._toastr.success('Registration successful');
+          this.registerForm.reset();
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message;
+        },
+      });
     } else {
       this.registerForm.markAllAsTouched();
     }

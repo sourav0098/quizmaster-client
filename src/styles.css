@@ -6,8 +6,8 @@ body {
 }
 
 :root {
-  --primary-color: #5832d3;
-  --primary-color-hover: #5f31f7;
+  --primary-color: #341f97;
+  --primary-color-hover: #291876;
 }
 
 #root {
@@ -42,4 +42,8 @@ body {
 
 .text-primary {
   color: var(--primary-color) !important;
+}
+
+.bg-navbar {
+  background-color: var(--primary-color) !important;
 }
