@@ -1,0 +1,62 @@
+<app-sidebar></app-sidebar>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <h2>
+        <i
+          class="fa-solid fa-bars me-2"
+          [style.cursor]="'pointer'"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+        ></i>
+        Quizzes
+      </h2>
+      <hr />
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-3" *ngFor="let q of quizzes">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-3">
+              <h5 class="card-title mb-0">{{ q?.title }}</h5>
+              <small class="text-secondary mb-3">{{ q?.category.title }}</small>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mb-2">
+                <p class="card-text">
+                  {{ q.description }}
+                </p>
+              </div>
+              <div class="col-md-2">
+                <p>
+                  <span class="fw-semibold">Questions:</span>
+                  {{ q.numberOfQuestions }}
+                </p>
+              </div>
+              <div class="col-md-2">
+                <p>
+                  <span class="fw-semibold">Max Score:</span>
+                  {{ q.maxScore }}
+                </p>
+              </div>
+              <div class="col-md-2">
+                <p>
+                  <span class="fw-semibold">Quiz Duration:</span>
+                  {{ q.quizDuration }}
+                </p>
+              </div>
+              <div class="col-md-2">
+                <p>
+                  <span class="fw-semibold">Active:</span>
+                  {{ q.active }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<app-sidebar></app-sidebar>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <h2>
+        <i
+          class="fa-solid fa-bars me-2"
+          [style.cursor]="'pointer'"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+        ></i>
+        Add Category
+      </h2>
+      <hr />
+    </div>
+  </div>
+  <div class="container">
+    <!-- Server side errors -->
+    <div class="col-md-12" *ngIf="errorMessages.length > 0">
+      <div class="alert alert-danger" role="alert">
+        <ul class="m-0">
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Add Category Form -->
+    <form
+      class="row g-3"
+      [formGroup]="categoryForm"
+      (ngSubmit)="onCategoryFormSubmit()"
+    >
+      <div class="col-md-8">
+        <label for="title" class="form-label">Category Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Category Title"
+          formControlName="title"
+          [class.is-invalid]="
+            categoryForm.get('title')?.errors &&
+            categoryForm.get('title')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            categoryForm.get('title')?.errors &&
+            categoryForm.get('title')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.title">
+            <small *ngIf="categoryForm.get('title')?.hasError(error.type)">
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          name="description"
+          placeholder="Description"
+          formControlName="description"
+          cols="30"
+          rows="10"
+          [class.is-invalid]="
+            categoryForm.get('description')?.errors &&
+            categoryForm.get('description')?.touched
+          "
+        ></textarea>
+        <div
+          *ngIf="
+            categoryForm.get('description')?.errors &&
+            categoryForm.get('description')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.description">
+            <small *ngIf="categoryForm.get('description')?.hasError(error.type)">
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <button class="btn btn-primary" type="submit">Add Category</button>
+      </div>
+    </form>
+  </div>
+</div>

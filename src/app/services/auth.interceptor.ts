@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // add jwt token to request headers
     const token = this._authService.getTokenFromLocalStorage();
+    
     if (token != null) {
       // Clone the request and add the access token to the headers
       const authReq = req.clone({

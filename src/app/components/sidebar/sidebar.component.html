@@ -1,0 +1,73 @@
+<div
+  class="offcanvas offcanvas-start"
+  data-bs-scroll="true"
+  tabindex="-1"
+  id="sidebar"
+  aria-labelledby="sidebarLabel"
+  [style.backgroundColor]="'var(--primary-color)'"
+  [style.color]="'white'"
+  [style.maxWidth]="'220px'"
+>
+  <div class="offcanvas-header border-2 border-black">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">
+      Quiz Master
+    </h5>
+  </div>
+  <div class="offcanvas-body p-0">
+    <ul class="list-group">
+      <a
+        routerLink="/profile"
+        class="list-group-item sidebar-item"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-user me-2"></i>
+        <span>Profile</span>
+      </a>
+      <a
+        *ngIf="isAdmin()"
+        routerLink="/admin/categories"
+        class="list-group-item sidebar-item"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-list-ul me-2"></i>
+        <span>Categories</span>
+      </a>
+      <a
+        *ngIf="isAdmin()"
+        routerLink="/admin/add-category"
+        class="list-group-item sidebar-item"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-plus me-2"></i>
+        <span>Add category</span>
+      </a>
+      <a
+        *ngIf="isAdmin()"
+        routerLink="/admin/quizzes"
+        class="list-group-item sidebar-item"
+        routerLinkActive="active"
+      >
+        <i class="fas fa-question me-2"></i>
+        <span>Quizzes</span>
+      </a>
+      <a
+        *ngIf="isAdmin()"
+        routerLink="/admin/add-quiz"
+        class="list-group-item sidebar-item"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-square-plus me-2"></i>
+        <span>Add Quiz</span>
+      </a>
+      <a
+        (click)="logout()"
+        class="list-group-item sidebar-item"
+        [style.cursor]="'pointer'"
+        routerLinkActive="active"
+      >
+        <i class="fa-solid fa-right-from-bracket me-2"></i>
+        <span>Logout</span>
+      </a>
+    </ul>
+  </div>
+</div>

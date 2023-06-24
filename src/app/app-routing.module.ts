@@ -3,10 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from './pages/register/register.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/user/profile/profile.component';
-import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { normalGuard } from './guard/normal.guard';
 import { adminGuard } from './guard/admin.guard';
 import { loginGuard } from './guard/login.guard';
+import { CategoriesComponent } from './pages/admin/categories/categories.component';
+import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
+import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
+import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 
 const routes: Routes = [
   {
@@ -28,8 +31,26 @@ const routes: Routes = [
     canActivate: [normalGuard],
   },
   {
-    path: 'admin/dashboard',
-    component: DashboardComponent,
+    path: 'admin/categories',
+    component: CategoriesComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/add-category',
+    component: AddCategoryComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/quizzes',
+    component: QuizzesComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/add-quiz',
+    component: AddQuizComponent,
     pathMatch: 'full',
     canActivate: [adminGuard],
   },

@@ -1,1 +1,108 @@
-<p>profile works!</p>
+<app-sidebar></app-sidebar>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <h2>
+        <i
+          class="fa-solid fa-bars me-2"
+          [style.cursor]="'pointer'"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+        ></i>
+        Profile
+      </h2>
+      <hr />
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md text-center mb-3">
+        <img
+          src="../../../../assets/default-profile.png"
+          alt="Profile"
+          width="150"
+          height="150"
+        />
+      </div>
+    </div>
+    <!-- Server side errors -->
+    <div class="col-md-12" *ngIf="errorMessages.length > 0">
+      <div class="alert alert-danger" role="alert">
+        <ul class="m-0">
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Profile Form -->
+    <form
+      class="row g-3"
+      [formGroup]="profileForm"
+      (ngSubmit)="onProfileFormSubmit()"
+    >
+      <div class="col-md-6">
+        <label for="fname" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fname"
+          name="fname"
+          placeholder="First Name"
+          formControlName="fname"
+          [class.is-invalid]="
+            profileForm.get('fname')?.errors &&
+            profileForm.get('fname')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            profileForm.get('fname')?.errors &&
+            profileForm.get('fname')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.fname">
+            <small *ngIf="profileForm.get('fname')?.hasError(error.type)">
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="lname" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lname"
+          name="lname"
+          placeholder="Last Name"
+          formControlName="lname"
+          [class.is-invalid]="
+            profileForm.get('lname')?.errors &&
+            profileForm.get('lname')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            profileForm.get('lname')?.errors &&
+            profileForm.get('lname')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.lname">
+            <small *ngIf="profileForm.get('lname')?.hasError(error.type)">
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <p class="form-control bg-light text-muted">{{ user?.email }}</p>
+      </div>
+      <div class="col-md-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

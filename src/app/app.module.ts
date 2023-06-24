@@ -13,6 +13,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { FooterComponent } from './components/footer/footer.component';
 import { authInterceptorProviders } from './services/auth.interceptor';
 import { ProfileComponent } from './pages/user/profile/profile.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
+import { CategoriesComponent } from './pages/admin/categories/categories.component';
+import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
+import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +27,11 @@ import { ProfileComponent } from './pages/user/profile/profile.component';
     LoginComponent,
     FooterComponent,
     ProfileComponent,
+    SidebarComponent,
+    AddCategoryComponent,
+    CategoriesComponent,
+    AddQuizComponent,
+    QuizzesComponent,
   ],
   imports: [
     BrowserModule,

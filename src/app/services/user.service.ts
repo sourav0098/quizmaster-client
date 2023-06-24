@@ -22,4 +22,12 @@ export class UserService {
       user
     );
   }
+
+  // update user
+  public updateUser(id: string, user: any) {
+    return this._http.put(
+      `${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.USERS}/${id}`,
+      user
+    );
+  }
 }

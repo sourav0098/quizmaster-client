@@ -98,7 +98,6 @@ export class RegisterComponent {
 
   onRegisterFormSubmit() {
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
       this._userService.registerUser(this.registerForm.value).subscribe({
         next: (res) => {
           console.log(res);
