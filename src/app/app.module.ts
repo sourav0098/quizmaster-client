@@ -18,6 +18,7 @@ import { AddCategoryComponent } from './pages/admin/add-category/add-category.co
 import { CategoriesComponent } from './pages/admin/categories/categories.component';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
+import { QuizDeleteModalComponent } from './components/quiz-delete-modal/quiz-delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
     CategoriesComponent,
     AddQuizComponent,
     QuizzesComponent,
+    QuizDeleteModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,10 @@ import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     HttpClientModule,
   ],
   providers: [authInterceptorProviders],

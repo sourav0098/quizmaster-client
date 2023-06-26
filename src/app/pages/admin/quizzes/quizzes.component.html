@@ -20,8 +20,17 @@
         <div class="card">
           <div class="card-body">
             <div class="mb-3">
-              <h5 class="card-title mb-0">{{ q?.title }}</h5>
-              <small class="text-secondary mb-3">{{ q?.category.title }}</small>
+              <h5 class="card-title mb-0 d-inline-block">{{ q?.title }}</h5>
+              <span
+                class="ms-2 badge rounded-pill text-bg-success fw-semibold"
+                [ngClass]="{ 'bg-danger': !q?.active }"
+              >
+                {{ q?.active ? "Active" : "Not Active" }}
+              </span>
+
+              <small class="text-secondary mb-3 d-block">{{
+                q?.category.title
+              }}</small>
             </div>
             <div class="row">
               <div class="col-md-12 mb-2">
@@ -29,30 +38,43 @@
                   {{ q.description }}
                 </p>
               </div>
-              <div class="col-md-2">
-                <p>
+              <div class="col-md-4 col-lg-3">
+                <p class="mb-0">
                   <span class="fw-semibold">Questions:</span>
                   {{ q.numberOfQuestions }}
                 </p>
               </div>
-              <div class="col-md-2">
-                <p>
+              <div class="col-md-4 col-lg-3">
+                <p class="mb-0">
                   <span class="fw-semibold">Max Score:</span>
                   {{ q.maxScore }}
                 </p>
               </div>
-              <div class="col-md-2">
-                <p>
+              <div class="col-md-4 col-lg-3">
+                <p class="mb-0">
                   <span class="fw-semibold">Quiz Duration:</span>
                   {{ q.quizDuration }}
                 </p>
               </div>
-              <div class="col-md-2">
-                <p>
-                  <span class="fw-semibold">Active:</span>
-                  {{ q.active }}
-                </p>
+            </div>
+            <div class="d-flex gap-2 mt-3">
+              <div>
+                <button class="btn btn-primary btn-sm">Questions</button>
               </div>
+              <div>
+                <button
+                  class="btn btn-danger btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#quiz-delete-modal"
+                >
+                  Delete
+                </button>
+              </div>
+              <!-- delete modal -->
+              <app-quiz-delete-modal
+                [quizId]="q.quizId"
+                (deleteClicked)="onDeleteQuiz($event)"
+              ></app-quiz-delete-modal>
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 export class AddQuizComponent {
   quizForm: FormGroup;
   categories: any = [];
+  errorMessages: string[] = [];
 
   ngOnInit(): void {
     this._categoryService.getAllCategories(0, 100).subscribe({
@@ -118,7 +119,19 @@ export class AddQuizComponent {
 
   onQuizFormSubmit() {
     if (this.quizForm.valid) {
-      console.log(this.quizForm.value);
+      this._quizService.addQuiz(this.quizForm.value).subscribe({
+        next: (res: any) => {
+          this._toastr.success('Quiz added successfully');
+          this.quizForm.reset();
+        },
+        error: (err) => {
+          if (err?.error?.errors.length > 0) {
+            this.errorMessages = err.error.errors;
+          } else {
+            this._toastr.error('Something went wrong');
+          }
+        },
+      });
     } else {
       this.quizForm.markAllAsTouched();
     }
