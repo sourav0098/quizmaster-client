@@ -5,21 +5,46 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
 @Component({
-  selector: 'app-add-quiz',
-  templateUrl: './add-quiz.component.html',
-  styleUrls: ['./add-quiz.component.css'],
+  selector: 'app-update-quiz',
+  templateUrl: './update-quiz.component.html',
+  styleUrls: ['./update-quiz.component.css'],
 })
-export class AddQuizComponent {
-  quizForm: FormGroup;
+export class UpdateQuizComponent {
+  quizId: string = '';
+  quizTitle: string = '';
+  updateQuizForm: FormGroup;
   categories: any = [];
   errorMessages: string[] = [];
 
   ngOnInit(): void {
+    this.quizId = this._route.snapshot.params['id'];
+
+    this._quizService.getQuizById(this.quizId).subscribe({
+      next: (res: any) => {
+        // after getting the quiz pre fill the values in update form
+        this.updateQuizForm.patchValue({
+          categoryId: res?.category?.categoryId,
+          title: res?.title,
+          description: res?.description,
+          maxScore: res?.maxScore,
+          numberOfQuestions: res?.numberOfQuestions,
+          quizDuration: res?.quizDuration,
+          active: res?.active,
+        });
+
+        this.quizTitle = res?.title;
+      },
+      error: (err) => {
+        this._toastr.error('Something went wrong! Unable to fetch category');
+      },
+    });
+
     this._categoryService.getAllCategories(0, 100).subscribe({
       next: (res: any) => {
         this.categories = res?.content;
@@ -31,12 +56,14 @@ export class AddQuizComponent {
   }
 
   constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
     private _fb: FormBuilder,
     private _quizService: QuizService,
     private _categoryService: CategoryService,
     private _toastr: ToastrService
   ) {
-    this.quizForm = this._fb.group({
+    this.updateQuizForm = this._fb.group({
       categoryId: new FormControl('', [Validators.required]),
       title: new FormControl('', [
         Validators.required,
@@ -117,23 +144,25 @@ export class AddQuizComponent {
     ],
   };
 
-  onQuizFormSubmit() {
-    if (this.quizForm.valid) {
-      this._quizService.addQuiz(this.quizForm.value).subscribe({
-        next: (res: any) => {
-          this._toastr.success('Quiz added successfully');
-          this.quizForm.reset();
-        },
-        error: (err) => {
-          if (err?.error?.errors.length > 0) {
-            this.errorMessages = err.error.errors;
-          } else {
-            this._toastr.error('Something went wrong! Unable to add quiz');
-          }
-        },
-      });
+  onUpdateQuizFormSubmit() {
+    if (this.updateQuizForm.valid) {
+      this._quizService
+        .updateQuiz(this.updateQuizForm.value, this.quizId)
+        .subscribe({
+          next: (res: any) => {
+            this._toastr.success('Quiz updated successfully');
+            this._router.navigate(['/admin/quizzes']);
+          },
+          error: (err: any) => {
+            if (err?.error?.errors.length > 0) {
+              this.errorMessages = err.error.errors;
+            } else {
+              this._toastr.error('Something went wrong! unable to update quiz');
+            }
+          },
+        });
     } else {
-      this.quizForm.markAllAsTouched();
+      this.updateQuizForm.markAllAsTouched();
     }
   }
 }

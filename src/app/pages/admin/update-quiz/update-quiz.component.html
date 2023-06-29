@@ -1,0 +1,240 @@
+<app-sidebar></app-sidebar>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <h2>
+        <i
+          class="fa-solid fa-bars me-2"
+          [style.cursor]="'pointer'"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#sidebar"
+        ></i>
+        {{quizTitle}}
+      </h2>
+      <hr />
+    </div>
+  </div>
+  <div class="container">
+    <!-- Server side errors -->
+    <div class="col-md-12" *ngIf="errorMessages.length > 0">
+      <div class="alert alert-danger" role="alert">
+        <ul class="m-0">
+          <li *ngFor="let error of errorMessages">{{ error }}</li>
+        </ul>
+      </div>
+    </div>
+    <form
+      class="row g-3"
+      [formGroup]="updateQuizForm"
+      (ngSubmit)="onUpdateQuizFormSubmit()"
+    >
+      <div class="col-md-4">
+        <label for="category" class="form-label">Category</label>
+        <select
+          class="form-select"
+          formControlName="categoryId"
+          [class.is-invalid]="
+            updateQuizForm.get('categoryId')?.errors &&
+            updateQuizForm.get('categoryId')?.touched
+          "
+        >
+          <option value="" disabled selected>Choose a category</option>
+          <option value="{{ c.categoryId }}" *ngFor="let c of categories">
+            {{ c.title }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            updateQuizForm.get('categoryId')?.errors &&
+            updateQuizForm.get('categoryId')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.category">
+            <small
+              *ngIf="updateQuizForm.get('categoryId')?.hasError(error.type)"
+            >
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label for="title" class="form-label">Quiz Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Quiz Title"
+          formControlName="title"
+          [class.is-invalid]="
+            updateQuizForm.get('title')?.errors &&
+            updateQuizForm.get('title')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            updateQuizForm.get('title')?.errors &&
+            updateQuizForm.get('title')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.title">
+            <small *ngIf="updateQuizForm.get('title')?.hasError(error.type)">
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          name="description"
+          placeholder="Description"
+          formControlName="description"
+          cols="30"
+          rows="6"
+          [class.is-invalid]="
+            updateQuizForm.get('description')?.errors &&
+            updateQuizForm.get('description')?.touched
+          "
+        ></textarea>
+        <div
+          *ngIf="
+            updateQuizForm.get('description')?.errors &&
+            updateQuizForm.get('description')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.description">
+            <small
+              *ngIf="updateQuizForm.get('description')?.hasError(error.type)"
+            >
+              {{ error.message }}
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="maxScore" class="form-label">Max Score</label>
+        <input
+          type="text"
+          class="form-control"
+          id="maxScore"
+          name="maxScore"
+          placeholder="Max Score"
+          formControlName="maxScore"
+          [class.is-invalid]="
+            updateQuizForm.get('maxScore')?.errors &&
+            updateQuizForm.get('maxScore')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            updateQuizForm.get('maxScore')?.errors &&
+            updateQuizForm.get('maxScore')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.maxScore">
+            <small *ngIf="updateQuizForm.get('maxScore')?.hasError(error.type)">
+              {{ error.message }}
+              <br />
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="numberOfQuestions" class="form-label"
+          >Number of Questions</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          id="numberOfQuestions"
+          name="numberOfQuestions"
+          placeholder="Number of Questions"
+          formControlName="numberOfQuestions"
+          [class.is-invalid]="
+            updateQuizForm.get('numberOfQuestions')?.errors &&
+            updateQuizForm.get('numberOfQuestions')?.touched
+          "
+        />
+        <div
+          *ngIf="
+            updateQuizForm.get('numberOfQuestions')?.errors &&
+            updateQuizForm.get('numberOfQuestions')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container
+            *ngFor="let error of customErrorMessages.numberOfQuestions"
+          >
+            <small
+              *ngIf="
+                updateQuizForm.get('numberOfQuestions')?.hasError(error.type)
+              "
+            >
+              {{ error.message }}
+              <br />
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="maxScore" class="form-label">Quiz Duration</label>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="quizDuration"
+            name="quizDuration"
+            placeholder="Quiz Duration"
+            formControlName="quizDuration"
+            [class.is-invalid]="
+              updateQuizForm.get('quizDuration')?.errors &&
+              updateQuizForm.get('quizDuration')?.touched
+            "
+          />
+          <div class="input-group-text">min</div>
+        </div>
+        <div
+          *ngIf="
+            updateQuizForm.get('quizDuration')?.errors &&
+            updateQuizForm.get('quizDuration')?.touched
+          "
+          class="text-danger"
+        >
+          <ng-container *ngFor="let error of customErrorMessages.quizDuration">
+            <small
+              *ngIf="updateQuizForm.get('quizDuration')?.hasError(error.type)"
+            >
+              {{ error.message }}
+              <br />
+            </small>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-check form-switch">
+          <label class="form-check-label" for="active">Active</label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="active"
+            name="active"
+            formControlName="active"
+          />
+        </div>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary" type="submit">Update</button>
+      </div>
+    </form>
+  </div>
+</div>

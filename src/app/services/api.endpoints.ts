@@ -4,4 +4,5 @@ export const API_ENDPOINTS = {
   USERS: 'users',
   CATEGORY: 'category',
   QUIZ: 'quiz',
+  QUESTION: 'question',
 };

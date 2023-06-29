@@ -18,7 +18,9 @@ import { AddCategoryComponent } from './pages/admin/add-category/add-category.co
 import { CategoriesComponent } from './pages/admin/categories/categories.component';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
-import { QuizDeleteModalComponent } from './components/quiz-delete-modal/quiz-delete-modal.component';
+import { QuizQuestionsComponent } from './pages/admin/quiz-questions/quiz-questions.component';
+import { UpdateQuizComponent } from './pages/admin/update-quiz/update-quiz.component';
+import { AddQuestionModalComponent } from './components/add-question-modal/add-question-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { QuizDeleteModalComponent } from './components/quiz-delete-modal/quiz-de
     CategoriesComponent,
     AddQuizComponent,
     QuizzesComponent,
-    QuizDeleteModalComponent,
+    QuizQuestionsComponent,
+    UpdateQuizComponent,
+    AddQuestionModalComponent,
   ],
   imports: [
     BrowserModule,

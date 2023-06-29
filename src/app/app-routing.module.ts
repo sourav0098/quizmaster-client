@@ -10,6 +10,8 @@ import { CategoriesComponent } from './pages/admin/categories/categories.compone
 import { AddCategoryComponent } from './pages/admin/add-category/add-category.component';
 import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
+import { QuizQuestionsComponent } from './pages/admin/quiz-questions/quiz-questions.component';
+import { UpdateQuizComponent } from './pages/admin/update-quiz/update-quiz.component';
 
 const routes: Routes = [
   {
@@ -51,6 +53,18 @@ const routes: Routes = [
   {
     path: 'admin/add-quiz',
     component: AddQuizComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/update-quiz/:id',
+    component: UpdateQuizComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/quiz-questions/:id/:title',
+    component: QuizQuestionsComponent,
     pathMatch: 'full',
     canActivate: [adminGuard],
   },

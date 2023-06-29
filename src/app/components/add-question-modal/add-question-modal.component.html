@@ -1,0 +1,264 @@
+<!-- Modal -->
+<div
+  class="modal fade modal-lg"
+  id="add-question-modal"
+  tabindex="-1"
+  aria-labelledby="addQuestionModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Question</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <!-- Server side errors -->
+          <div class="col-md-12" *ngIf="errorMessages.length > 0">
+            <div class="alert alert-danger" role="alert">
+              <ul class="m-0">
+                <li *ngFor="let error of errorMessages">{{ error }}</li>
+              </ul>
+            </div>
+          </div>
+          <form
+            class="row g-3"
+            [formGroup]="addQuestionForm"
+            (ngSubmit)="onAddQuestionFormSubmit()"
+          >
+            <div class="col-md-12">
+              <label for="question" class="form-label">Question</label>
+              <textarea
+                type="text"
+                class="form-control"
+                id="question"
+                name="question"
+                placeholder="Question"
+                formControlName="question"
+                [class.is-invalid]="
+                  addQuestionForm.get('question')?.errors &&
+                  addQuestionForm.get('question')?.touched
+                "
+              ></textarea>
+              <div
+                *ngIf="
+                  addQuestionForm.get('question')?.errors &&
+                  addQuestionForm.get('question')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container
+                  *ngFor="let error of customErrorMessages.question"
+                >
+                  <small
+                    *ngIf="
+                      addQuestionForm.get('question')?.hasError(error.type)
+                    "
+                  >
+                    {{ error.message }}
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="option1" class="form-label">Option 1</label>
+              <input
+                type="text"
+                class="form-control"
+                id="option1"
+                name="option1"
+                placeholder="Option 1"
+                formControlName="option1"
+                [class.is-invalid]="
+                  addQuestionForm.get('option1')?.errors &&
+                  addQuestionForm.get('option1')?.touched
+                "
+              />
+              <div
+                *ngIf="
+                  addQuestionForm.get('option1')?.errors &&
+                  addQuestionForm.get('option1')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container *ngFor="let error of customErrorMessages.option1">
+                  <small
+                    *ngIf="addQuestionForm.get('option1')?.hasError(error.type)"
+                  >
+                    {{ error.message }}
+                    <br />
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="option2" class="form-label">Option 2</label>
+              <input
+                type="text"
+                class="form-control"
+                id="option2"
+                name="option2"
+                placeholder="Option 2"
+                formControlName="option2"
+                [class.is-invalid]="
+                  addQuestionForm.get('option2')?.errors &&
+                  addQuestionForm.get('option2')?.touched
+                "
+              />
+              <div
+                *ngIf="
+                  addQuestionForm.get('option2')?.errors &&
+                  addQuestionForm.get('option2')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container *ngFor="let error of customErrorMessages.option2">
+                  <small
+                    *ngIf="addQuestionForm.get('option2')?.hasError(error.type)"
+                  >
+                    {{ error.message }}
+                    <br />
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="option3" class="form-label">Option 3</label>
+              <input
+                type="text"
+                class="form-control"
+                id="option3"
+                name="option"
+                placeholder="Option 3"
+                formControlName="option3"
+                [class.is-invalid]="
+                  addQuestionForm.get('option3')?.errors &&
+                  addQuestionForm.get('option3')?.touched
+                "
+              />
+              <div
+                *ngIf="
+                  addQuestionForm.get('option3')?.errors &&
+                  addQuestionForm.get('option3')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container *ngFor="let error of customErrorMessages.option3">
+                  <small
+                    *ngIf="addQuestionForm.get('option3')?.hasError(error.type)"
+                  >
+                    {{ error.message }}
+                    <br />
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="option4" class="form-label">Option 4</label>
+              <input
+                type="text"
+                class="form-control"
+                id="option4"
+                name="option4"
+                placeholder="Option 4"
+                formControlName="option4"
+                [class.is-invalid]="
+                  addQuestionForm.get('option4')?.errors &&
+                  addQuestionForm.get('option4')?.touched
+                "
+              />
+              <div
+                *ngIf="
+                  addQuestionForm.get('option4')?.errors &&
+                  addQuestionForm.get('option4')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container *ngFor="let error of customErrorMessages.option4">
+                  <small
+                    *ngIf="addQuestionForm.get('option4')?.hasError(error.type)"
+                  >
+                    {{ error.message }}
+                    <br />
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <label for="category" class="form-label">Answer</label>
+              <select
+                class="form-select"
+                formControlName="answer"
+                [class.is-invalid]="
+                  addQuestionForm.get('answer')?.errors &&
+                  addQuestionForm.get('answer')?.touched
+                "
+              >
+                <option value="" disabled selected>Choose a answer</option>
+                <option
+                  [value]="addQuestionForm.get('option1')?.value"
+                  *ngIf="addQuestionForm.get('option1')?.value"
+                >
+                  {{ addQuestionForm.get("option1")?.value }}
+                </option>
+                <option
+                  [value]="addQuestionForm.get('option2')?.value"
+                  *ngIf="addQuestionForm.get('option2')?.value"
+                >
+                  {{ addQuestionForm.get("option2")?.value }}
+                </option>
+                <option
+                  [value]="addQuestionForm.get('option3')?.value"
+                  *ngIf="addQuestionForm.get('option3')?.value"
+                >
+                  {{ addQuestionForm.get("option3")?.value }}
+                </option>
+                <option
+                  [value]="addQuestionForm.get('option4')?.value"
+                  *ngIf="addQuestionForm.get('option4')?.value"
+                >
+                  {{ addQuestionForm.get("option4")?.value }}
+                </option>
+              </select>
+              <div
+                *ngIf="
+                  addQuestionForm.get('answer')?.errors &&
+                  addQuestionForm.get('answer')?.touched
+                "
+                class="text-danger"
+              >
+                <ng-container *ngFor="let error of customErrorMessages.answer">
+                  <small
+                    *ngIf="addQuestionForm.get('answer')?.hasError(error.type)"
+                  >
+                    {{ error.message }}
+                  </small>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <button class="btn btn-primary" type="submit">
+                Add Question
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                hidden="true"
+                id="close-add-question-modal"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
