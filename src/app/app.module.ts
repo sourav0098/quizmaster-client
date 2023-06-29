@@ -21,6 +21,10 @@ import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
 import { QuizQuestionsComponent } from './pages/admin/quiz-questions/quiz-questions.component';
 import { UpdateQuizComponent } from './pages/admin/update-quiz/update-quiz.component';
 import { AddQuestionModalComponent } from './components/add-question-modal/add-question-modal.component';
+import { UpdateQuestionComponent } from './pages/admin/update-question/update-question.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { UpdateCategoryComponent } from './pages/admin/update-category/update-category.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,9 @@ import { AddQuestionModalComponent } from './components/add-question-modal/add-q
     QuizQuestionsComponent,
     UpdateQuizComponent,
     AddQuestionModalComponent,
+    UpdateQuestionComponent,
+    UpdateCategoryComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +52,7 @@ import { AddQuestionModalComponent } from './components/add-question-modal/add-q
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    CKEditorModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,

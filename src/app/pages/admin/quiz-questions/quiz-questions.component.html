@@ -63,7 +63,12 @@
         </div>
         <hr />
         <div class="d-flex gap-2 mt-3">
-          <button class="btn btn-sm btn-primary">Update</button>
+          <button
+            class="btn btn-sm btn-primary"
+            [routerLink]="'/admin/update-question/' + q?.questionId"
+          >
+            Update
+          </button>
           <button
             class="btn btn-sm btn-danger"
             data-bs-toggle="modal"

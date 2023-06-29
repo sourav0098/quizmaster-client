@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 
 interface Category {
@@ -15,9 +16,13 @@ interface Category {
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent {
-  constructor(private _categoryService: CategoryService) {}
-
   categories: Category[] = [];
+  confirmDeleteCategoryId: string = '';
+
+  constructor(
+    private _categoryService: CategoryService,
+    private _toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this._categoryService.getAllCategories(0, 10).subscribe({
@@ -29,5 +34,26 @@ export class CategoriesComponent {
         console.log(err);
       },
     });
+  }
+
+  confirmDelete(id: string) {
+    this.confirmDeleteCategoryId = id;
+  }
+
+  deleteCategory() {
+    this._categoryService
+      .deleteCategory(this.confirmDeleteCategoryId)
+      .subscribe({
+        next: (res: any) => {
+          this._toastr.success('Category deleted successfully');
+          this.categories = this.categories.filter(
+            (category: Category) =>
+              category.categoryId !== this.confirmDeleteCategoryId
+          );
+        },
+        error: (err) => {
+          this._toastr.error('Something went wrong! Unable to delete category');
+        },
+      });
   }
 }

@@ -12,8 +12,16 @@ import { QuizzesComponent } from './pages/admin/quizzes/quizzes.component';
 import { AddQuizComponent } from './pages/admin/add-quiz/add-quiz.component';
 import { QuizQuestionsComponent } from './pages/admin/quiz-questions/quiz-questions.component';
 import { UpdateQuizComponent } from './pages/admin/update-quiz/update-quiz.component';
+import { UpdateQuestionComponent } from './pages/admin/update-question/update-question.component';
+import { UpdateCategoryComponent } from './pages/admin/update-category/update-category.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+  },
   {
     path: 'register',
     component: RegisterComponent,
@@ -45,6 +53,12 @@ const routes: Routes = [
     canActivate: [adminGuard],
   },
   {
+    path: 'admin/update-category/:id',
+    component: UpdateCategoryComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
     path: 'admin/quizzes',
     component: QuizzesComponent,
     pathMatch: 'full',
@@ -63,8 +77,14 @@ const routes: Routes = [
     canActivate: [adminGuard],
   },
   {
-    path: 'admin/quiz-questions/:id/:title',
+    path: 'admin/quiz-questions/:id',
     component: QuizQuestionsComponent,
+    pathMatch: 'full',
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'admin/update-question/:id',
+    component: UpdateQuestionComponent,
     pathMatch: 'full',
     canActivate: [adminGuard],
   },

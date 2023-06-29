@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from 'src/app/services/question.service';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-question-modal',
@@ -19,6 +20,7 @@ export class AddQuestionModalComponent {
   addQuestionForm: FormGroup;
   errorMessages: string[] = [];
   @Output() questionEmitter: EventEmitter<any> = new EventEmitter<any>();
+  public Editor = ClassicEditor;
 
   constructor(
     private _route: ActivatedRoute,
