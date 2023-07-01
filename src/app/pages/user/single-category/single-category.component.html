@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <h1>{{ category.title }}</h1>
+      <p>{{ category.description }}</p>
+      <hr />
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- If no quiz found -->
+    <div class="col" *ngIf="quizzes.length == 0">
+      <h3 class="text-center mt-3">No quiz found for this category</h3>
+    </div>
+
+    <div class="col" *ngFor="let q of quizzes">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ q.title }}</h5>
+          <p class="card-text" style="min-height: 80px">{{ q.description }}</p>
+          <div class="row">
+            <div class="col-md-4 col-lg-3">
+              <p class="mb-0">
+                <span class="fw-semibold">Questions:</span>
+                {{ q.numberOfQuestions }}
+              </p>
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <p class="mb-0">
+                <span class="fw-semibold">Max Score:</span>
+                {{ q.maxScore }}
+              </p>
+            </div>
+            <div class="col-md-4 col-lg-3">
+              <p class="mb-0">
+                <span class="fw-semibold">Quiz Duration:</span>
+                {{ q.quizDuration }} min
+              </p>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary mt-2"
+            [routerLink]="'/quiz-instruction/' + q.quizId"
+          >
+            Start Quiz
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

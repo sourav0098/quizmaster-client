@@ -1,0 +1,58 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+      <h5 class="mb-0">Read the instructions carefully</h5>
+      <small class="text-muted">One more step to go</small>
+      <hr />
+    </div>
+    <div class="col-12">
+      <h4>{{ quiz.title }}</h4>
+      <p>{{ quiz.description }}</p>
+    </div>
+    <div class="col-12">
+      <h5>Important Instructions</h5>
+      <ul>
+        <li>The quiz consists of multiple-choice questions</li>
+        <li>Each question has four options, labeled A, B, C, and D</li>
+        <li>
+          Read each question carefully and choose the most appropriate answer
+        </li>
+        <li>
+          You will have a total of
+          <span class="fw-semibold">{{ quiz.quizDuration }} minutes</span> to
+          complete the quiz. Please manage your time wisely
+        </li>
+        <li>
+          The quiz comprises a total of
+          <span class="fw-semibold"
+            >{{ quiz.numberOfQuestions }} questions</span
+          >
+        </li>
+        <li>
+          The maximum marks for this quiz is
+          <span class="fw-semibold">{{ quiz.maxScore }}</span>
+        </li>
+        <li>
+          Make sure to submit your quiz before the time runs out to avoid any
+          incomplete submissions
+        </li>
+        <li>
+          There is no negative marking for incorrect answers, so feel free to
+          attempt all questions
+        </li>
+
+        <li>
+          <span class="fw-semibold">Good luck!</span> Start the quiz when you
+          are ready
+        </li>
+      </ul>
+      <button
+        class="btn btn-primary btn-sm"
+        [routerLink]="'/quiz/' + quiz.quizId + '/attempt'"
+        (click)="resetQuizTimer()"
+      >
+        Start Quiz
+      </button>
+    </div>
+  </div>
+</div>

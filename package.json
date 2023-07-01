@@ -23,6 +23,7 @@
     "@ckeditor/ckeditor5-build-classic": "^38.1.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
+    "ng-circle-progress": "^1.7.1",
     "ngx-toastr": "^16.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

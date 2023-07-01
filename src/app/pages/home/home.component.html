@@ -20,13 +20,36 @@
   <div class="row">
     <h3 class="text-primary mb-3">Discover Quiz Categories</h3>
     <div class="col-md-6 col-xl-4 mb-3" *ngFor="let c of categories">
-      <div class="card">
+      <div
+        class="card card-border"
+        style="cursor: pointer"
+        [routerLink]="'/category/' + c.categoryId"
+      >
         <div class="card-body">
-          <h5 class="link-text">{{ c?.title }}</h5>
+          <h5 class="link-text">
+            {{ c?.title }}
+          </h5>
           <p class="card-text" style="min-height: 120px">
             {{ c.description | slice : 0 : 130 }}
-            {{ c.description.length > 220 ? "..." : "" }}
+            {{ c.description.length > 130 ? "..." : "" }}
           </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-3">
+      <div
+        class="card primary-border"
+        style="min-height: 188px; cursor: pointer"
+        [routerLink]="'/categories'"
+      >
+        <div
+          class="card-body d-flex flex-column align-items-center justify-content-center"
+        >
+          <p class="text-center text-primary">
+            Explore all available quiz categories and find the perfect challenge
+            for you
+          </p>
+          <button class="btn btn-primary">Get Started</button>
         </div>
       </div>
     </div>

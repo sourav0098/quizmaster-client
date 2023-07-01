@@ -24,6 +24,28 @@ export class QuizService {
     ${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUIZ}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
   }
 
+  public getQuizByCategoryId(
+    categoryId: string,
+    pageNumber: number = 0,
+    pageSize: number = 10,
+    sortBy: string = 'title',
+    sortDir: string = 'asc'
+  ) {
+    return this._http.get(`
+    ${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUIZ}/category/${categoryId}?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
+  }
+
+  public getActiveQuizByCategoryId(
+    categoryId: string,
+    pageNumber: number = 0,
+    pageSize: number = 10,
+    sortBy: string = 'title',
+    sortDir: string = 'asc'
+  ) {
+    return this._http.get(`
+    ${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUIZ}/category/${categoryId}/active?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`);
+  }
+
   public addQuiz(quiz: any) {
     return this._http.post(
       `${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUIZ}`,

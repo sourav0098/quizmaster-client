@@ -15,6 +15,10 @@ import { UpdateQuizComponent } from './pages/admin/update-quiz/update-quiz.compo
 import { UpdateQuestionComponent } from './pages/admin/update-question/update-question.component';
 import { UpdateCategoryComponent } from './pages/admin/update-category/update-category.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AllCategoriesComponent } from './pages/user/all-categories/all-categories.component';
+import { SingleCategoryComponent } from './pages/user/single-category/single-category.component';
+import { QuizInstructionComponent } from './pages/user/quiz-instruction/quiz-instruction.component';
+import { QuizAttemptComponent } from './pages/user/quiz-attempt/quiz-attempt.component';
 
 const routes: Routes = [
   {
@@ -41,11 +45,36 @@ const routes: Routes = [
     canActivate: [normalGuard],
   },
   {
+    path: 'categories',
+    component: AllCategoriesComponent,
+    pathMatch: 'full',
+    canActivate: [normalGuard],
+  },
+  {
+    path: 'category/:id',
+    component: SingleCategoryComponent,
+    pathMatch: 'full',
+    canActivate: [normalGuard],
+  },
+  {
+    path: 'quiz-instruction/:id',
+    component: QuizInstructionComponent,
+    pathMatch: 'full',
+    canActivate: [normalGuard],
+  },
+  {
+    path: 'quiz/:id/attempt',
+    component: QuizAttemptComponent,
+    pathMatch: 'full',
+    canActivate: [normalGuard],
+  },
+  {
     path: 'admin/categories',
     component: CategoriesComponent,
     pathMatch: 'full',
     canActivate: [adminGuard],
   },
+
   {
     path: 'admin/add-category',
     component: AddCategoryComponent,

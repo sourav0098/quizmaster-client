@@ -61,7 +61,7 @@ export class AddQuizComponent {
         Validators.pattern('^[0-9]*$'),
         Validators.min(1),
       ]),
-      active: new FormControl(true),
+      active: new FormControl(false),
     });
   }
 

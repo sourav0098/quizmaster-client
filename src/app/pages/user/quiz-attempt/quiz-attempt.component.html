@@ -1,0 +1,183 @@
+<div class="container mt-3">
+  <div class="row">
+    <h3>{{ quiz.title }}</h3>
+  </div>
+  <div class="row" *ngIf="!isQuizSubmitted">
+    <div class="col-md-4 col-lg-3">
+      <p class="mb-0">
+        <span class="fw-semibold">Questions:</span>
+        {{ quiz.numberOfQuestions }}
+      </p>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <p class="mb-0">
+        <span class="fw-semibold">Max Score:</span>
+        {{ quiz.maxScore }}
+      </p>
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <p class="mb-0">
+        <span class="fw-semibold">Quiz Duration:</span>
+        {{ quiz.quizDuration }} min
+      </p>
+    </div>
+  </div>
+  <div class="row mt-3" *ngIf="!isQuizSubmitted">
+    <!-- Left side for questions -->
+    <div class="col-md-8">
+      <div class="container">
+        <div class="row">
+          <div class="card mb-3" *ngFor="let q of questions; let i = index">
+            <div class="card-body">
+              <h5 class="card-title">{{ i + 1 }}) {{ q?.question }}</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [name]="'answer' + i"
+                      [value]="q?.option1"
+                      [id]="'option1' + i"
+                      [(ngModel)]="q.givenAnswer"
+                    />
+                    <label class="form-check-label" [for]="'option1' + i">
+                      {{ q?.option1 }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [name]="'answer' + i"
+                      [value]="q?.option2"
+                      [id]="'option2' + i"
+                      [(ngModel)]="q.givenAnswer"
+                    />
+                    <label class="form-check-label" [for]="'option2' + i">
+                      {{ q?.option2 }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [name]="'answer' + i"
+                      [value]="q?.option3"
+                      [id]="'option3' + i"
+                      [(ngModel)]="q.givenAnswer"
+                    />
+                    <label class="form-check-label" [for]="'option3' + i">
+                      {{ q?.option3 }}
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      [name]="'answer' + i"
+                      [value]="q?.option4"
+                      [id]="'option4' + i"
+                      [(ngModel)]="q.givenAnswer"
+                    />
+                    <label class="form-check-label" [for]="'option4' + i">
+                      {{ q?.option4 }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-0">
+            <button
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#confirm-modal"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right side for timer -->
+    <div class="col-md-4">
+      <h6 class="text-center">
+        Time is ticking! Quiz will be automatically submitted when the timer
+        reaches 0
+      </h6>
+      <div class="m-auto">
+        <circle-progress
+        [percent]="getProgressPercent()"
+          [radius]="60"
+          title="{{ formattedTimer }}"
+          [outerStrokeWidth]="10"
+          [innerStrokeWidth]="6"
+          [outerStrokeColor]="'#78C000'"
+          [innerStrokeColor]="'#C7E596'"
+          [animation]="true"
+          [clockwise]="false"
+          [animationDuration]="1000"
+          [maxPercent]="100"
+          [startFromZero]="false"
+          [animateTitle]="true"
+          titleFontSize="25"
+        ></circle-progress>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="isQuizSubmitted">
+    <div class="col-12">
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Thanks for completing the quiz!</h5>
+
+          <p class="mb-0"><span class="fw-semibold">Correct Answers:</span> {{correctAnswers}}</p>
+          <p class="mb-0"><span class="fw-semibold">Questions Attempted:</span> {{questionsAttempted}}</p>
+          <p class="mb-0"><span class="fw-semibold">Score:</span> {{marksGot | number:'1.0-0'}}/{{quiz.maxScore}}</p>
+          <a [routerLink]="'/'" class="btn btn-sm btn-primary mt-2">Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Submission confirm modal -->
+<div class="modal fade" id="confirm-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h5>Are you sure you want to submit this quiz?</h5>
+        <p>
+          Submitting the quiz will finalize your answers and complete the
+          evaluation. Please review your answers before submitting.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-bs-dismiss="modal"
+          (click)="submitQuiz()"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

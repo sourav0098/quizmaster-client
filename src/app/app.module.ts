@@ -25,6 +25,11 @@ import { UpdateQuestionComponent } from './pages/admin/update-question/update-qu
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UpdateCategoryComponent } from './pages/admin/update-category/update-category.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AllCategoriesComponent } from './pages/user/all-categories/all-categories.component';
+import { SingleCategoryComponent } from './pages/user/single-category/single-category.component';
+import { QuizInstructionComponent } from './pages/user/quiz-instruction/quiz-instruction.component';
+import { QuizAttemptComponent } from './pages/user/quiz-attempt/quiz-attempt.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,10 @@ import { HomeComponent } from './pages/home/home.component';
     UpdateQuestionComponent,
     UpdateCategoryComponent,
     HomeComponent,
+    AllCategoriesComponent,
+    SingleCategoryComponent,
+    QuizInstructionComponent,
+    QuizAttemptComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +67,14 @@ import { HomeComponent } from './pages/home/home.component';
       preventDuplicates: true,
     }),
     HttpClientModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      responsive: true,
+      showSubtitle: false,
+      showUnits: false
+    }),
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent],

@@ -1,0 +1,25 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+        <h1>Browse Quiz Categories</h1>
+        <hr>
+    </div>
+    <div class="col-md-6 col-xl-4 mb-3" *ngFor="let c of categories">
+      <div
+        class="card card-border"
+        style="cursor: pointer"
+        [routerLink]="'/category/' + c.categoryId"
+      >
+        <div class="card-body">
+          <h5 class="link-text">
+            {{ c?.title }}
+          </h5>
+          <p class="card-text" style="min-height: 120px">
+            {{ c.description | slice : 0 : 180 }}
+            {{ c.description.length > 180 ? "..." : "" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
