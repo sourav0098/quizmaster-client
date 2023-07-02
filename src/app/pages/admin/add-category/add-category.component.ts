@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 
@@ -17,10 +18,15 @@ export class AddCategoryComponent {
   categoryForm: FormGroup;
   errorMessages: string[] = [];
 
+  ngOnInit(): void {
+    this._titleService.setTitle('Add Category | Admin Dashboard');
+  }
+
   constructor(
     private _fb: FormBuilder,
     private _toastr: ToastrService,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _titleService: Title
   ) {
     this.categoryForm = this._fb.group({
       title: new FormControl('', [
@@ -53,9 +59,7 @@ export class AddCategoryComponent {
 
   onCategoryFormSubmit() {
     if (this.categoryForm.valid) {
-      this._categoryService
-      .addCategory(this.categoryForm.value)
-      .subscribe({
+      this._categoryService.addCategory(this.categoryForm.value).subscribe({
         next: (res) => {
           this._toastr.success('Category added successfully');
           this.categoryForm.reset();

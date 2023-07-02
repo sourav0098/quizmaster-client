@@ -48,13 +48,11 @@ const routes: Routes = [
     path: 'categories',
     component: AllCategoriesComponent,
     pathMatch: 'full',
-    canActivate: [normalGuard],
   },
   {
     path: 'category/:id',
     component: SingleCategoryComponent,
     pathMatch: 'full',
-    canActivate: [normalGuard],
   },
   {
     path: 'quiz-instruction/:id',

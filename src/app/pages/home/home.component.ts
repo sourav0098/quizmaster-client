@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 
@@ -19,10 +20,13 @@ export class HomeComponent {
 
   constructor(
     private _categoryService: CategoryService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this._titleService.setTitle('QuizMaster | Test Your Knowledge!');
+
     this._categoryService.getAllCategories(0, 5).subscribe({
       next: (res: any) => {
         this.categories = res?.content;

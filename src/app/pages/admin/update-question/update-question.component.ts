@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ToastrService } from 'ngx-toastr';
@@ -22,6 +23,9 @@ export class UpdateQuestionComponent {
   public Editor = ClassicEditor;
 
   ngOnInit(): void {
+
+    this._titleService.setTitle('Update Question | Admin Dashboard')
+
     this.questionId = this._route.snapshot.params['id'];
 
     this._questionService.getQuestionById(this.questionId).subscribe({
@@ -47,7 +51,8 @@ export class UpdateQuestionComponent {
     private _questionService: QuestionService,
     private _toastr: ToastrService,
     private _route: ActivatedRoute,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _titleService: Title
   ) {
     this.updateQuestionForm = this._fb.group({
       question: new FormControl('', [

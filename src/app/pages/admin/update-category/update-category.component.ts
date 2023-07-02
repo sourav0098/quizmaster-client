@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
@@ -22,6 +23,8 @@ export class UpdateCategoryComponent {
 
   ngOnInit(): void {
     this.categoryId = this._route.snapshot.params['id'];
+
+    this._titleService.setTitle('Update Category | Admin Dashboard')
 
     this._categoryService.getCategoryById(this.categoryId).subscribe({
       next: (res: any) => {
@@ -44,7 +47,8 @@ export class UpdateCategoryComponent {
     private _route: ActivatedRoute,
     private _router: Router,
     private _toastr: ToastrService,
-    private _categoryService: CategoryService
+    private _categoryService: CategoryService,
+    private _titleService: Title
   ) {
     this.updateCategoryForm = this._fb.group({
       title: new FormControl('', [

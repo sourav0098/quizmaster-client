@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
@@ -22,12 +23,17 @@ export class LoginComponent {
     private _router: Router,
     private _fb: FormBuilder,
     private toastr: ToastrService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _titleService: Title
   ) {
     this.loginForm = this._fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+  }
+
+  ngOnInit(): void {
+    this._titleService.setTitle('Login | Quiz Master')
   }
 
   customErrorMessages = {
@@ -59,7 +65,7 @@ export class LoginComponent {
           if (roles) {
             roles.forEach((role: any) => {
               if (role.roleName === ROLES.NORMAL) {
-                this._router.navigate(['/profile']);
+                this._router.navigate(['/']);
               }
               if (role.roleName === ROLES.ADMIN) {
                 this._router.navigate(['/']);

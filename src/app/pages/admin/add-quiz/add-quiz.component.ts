@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 import { QuizService } from 'src/app/services/quiz.service';
@@ -20,6 +21,8 @@ export class AddQuizComponent {
   errorMessages: string[] = [];
 
   ngOnInit(): void {
+    this._titleService.setTitle('Add Quiz | Admin Dashboard');
+    
     this._categoryService.getAllCategories(0, 100).subscribe({
       next: (res: any) => {
         this.categories = res?.content;
@@ -34,7 +37,8 @@ export class AddQuizComponent {
     private _fb: FormBuilder,
     private _quizService: QuizService,
     private _categoryService: CategoryService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {
     this.quizForm = this._fb.group({
       categoryId: new FormControl('', [Validators.required]),

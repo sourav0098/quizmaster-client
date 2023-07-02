@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
@@ -23,6 +24,8 @@ export class UpdateQuizComponent {
   errorMessages: string[] = [];
 
   ngOnInit(): void {
+    this._titleService.setTitle('Update Quiz | Admin Dashboard');
+
     this.quizId = this._route.snapshot.params['id'];
 
     this._quizService.getQuizById(this.quizId).subscribe({
@@ -61,7 +64,8 @@ export class UpdateQuizComponent {
     private _fb: FormBuilder,
     private _quizService: QuizService,
     private _categoryService: CategoryService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {
     this.updateQuizForm = this._fb.group({
       categoryId: new FormControl('', [Validators.required]),

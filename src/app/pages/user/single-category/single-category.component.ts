@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -18,9 +20,12 @@ export class SingleCategoryComponent {
   ngOnInit(): void {
     this.categoryId = this._route.snapshot.params['id'];
 
+    this._titleService.setTitle('Loading Category..');
+
     this._categoryService.getCategoryById(this.categoryId).subscribe({
-      next: (response) => {
+      next: (response:any) => {
         this.category = response;
+        this._titleService.setTitle(response?.title+" | Explore a World of Quizzes");
       },
       error: (err) => {
         this._toastr.error(
@@ -29,10 +34,10 @@ export class SingleCategoryComponent {
       },
     });
 
+
     this._quizService.getActiveQuizByCategoryId(this.categoryId).subscribe({
       next: (res: any) => {
         this.quizzes = res?.content;
-        console.log(res);
       },
       error: (err) => {
         this._toastr.error(
@@ -46,6 +51,17 @@ export class SingleCategoryComponent {
     private _categoryService: CategoryService,
     private _quizService: QuizService,
     private _toastr: ToastrService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _authService: AuthService,
+    private _titleService: Title
   ) {}
+
+  redirectToStartQuiz(quizId: string) {
+    if (this._authService.isLoggedIn()) {
+      this._router.navigate(['quiz-instruction/' + quizId]);
+    } else {
+      this._toastr.error('Please login to start quiz');
+    }
+  }
 }

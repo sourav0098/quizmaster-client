@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -20,7 +21,13 @@ export class ProfileComponent {
   errorMessages: string[] = [];
 
   ngOnInit(): void {
+    // loading user from local storage
     this.user = this._authService.getUserFromLocalStorage();
+
+    // set tile
+    this._titleService.setTitle('Welcome, ' + this.user?.fname);
+
+    // patching form values
     this.profileForm.patchValue({
       fname: this.user?.fname,
       lname: this.user?.lname,
@@ -31,7 +38,8 @@ export class ProfileComponent {
     private _authService: AuthService,
     private _fb: FormBuilder,
     private _toastr: ToastrService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _titleService: Title
   ) {
     this.user = this._authService.getUserFromLocalStorage();
 

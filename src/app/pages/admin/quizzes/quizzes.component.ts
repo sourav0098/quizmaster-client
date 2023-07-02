@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from 'src/app/services/quiz.service';
 
@@ -13,10 +14,15 @@ export class QuizzesComponent {
 
   constructor(
     private _quizService: QuizService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
+
+    this._titleService.setTitle('Quizzes | Admin Dashboard')
+    
+
     this._quizService.getQuizzes(0, 10).subscribe({
       next: (res: any) => {
         this.quizzes = res?.content;

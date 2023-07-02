@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/services/category.service';
 
@@ -21,10 +22,13 @@ export class CategoriesComponent {
 
   constructor(
     private _categoryService: CategoryService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this._titleService.setTitle('Categories | Admin Dashboard');
+
     this._categoryService.getAllCategories(0, 10).subscribe({
       next: (res: any) => {
         this.categories = res?.content;

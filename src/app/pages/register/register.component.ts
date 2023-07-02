@@ -8,6 +8,7 @@ import {
   ValidationErrors,
   AbstractControl,
 } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 import { REGEX_VALIDATOR } from 'src/app/utils/regex';
@@ -34,10 +35,15 @@ export class RegisterComponent {
     return null;
   }
 
+  ngOnInit(): void {
+    this._titleService.setTitle('Register | Quiz Master');
+  }
+
   constructor(
     private _fb: FormBuilder,
     private _toastr: ToastrService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _titleService: Title
   ) {
     this.registerForm = this._fb.group(
       {

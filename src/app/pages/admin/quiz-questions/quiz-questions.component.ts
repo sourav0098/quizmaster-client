@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from 'src/app/services/question.service';
@@ -23,16 +24,22 @@ export class QuizQuestionsComponent {
     private _route: ActivatedRoute,
     private _questionService: QuestionService,
     private _quizService: QuizService,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this._titleService.setTitle('Questions | Admin Dashboard');
+
     this.quizId = this._route.snapshot.params['id'];
 
     this._quizService.getQuizById(this.quizId).subscribe({
       next: (res: any) => {
         this.quizTitle = res?.title;
         this.numberOfQuestions = res?.numberOfQuestions;
+
+        this._titleService.setTitle('Questions for '+ res?.title + ' | Admin Dashboard');
+
       },
       error: (err) => {
         this._toastr.error('Something went wrong! unable to load quiz details');

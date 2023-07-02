@@ -24,6 +24,23 @@ export class QuestionService {
     );
   }
 
+  public getQuestionbyQuizForUser(
+    quizId: string,
+    pageNumber: number = 0,
+    pageSize: number = 10
+  ) {
+    return this._http.get(
+      `${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUESTION}/quiz/${quizId}/user-attempt?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+
+  public evaluateQuiz(questions: any) {
+    return this._http.post(
+      `${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUESTION}/eval-quiz`,
+      questions
+    );
+  }
+
   public addQuestion(question: any) {
     return this._http.post(
       `${API_ENDPOINTS.BASE_URL}${API_ENDPOINTS.QUESTION}`,

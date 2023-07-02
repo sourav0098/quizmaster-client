@@ -1,2 +1,12 @@
-<app-navbar></app-navbar>
-<router-outlet> </router-outlet>
+<ngx-ui-loader
+  fgsType="three-strings"
+  pbColor="#FF5722"
+  fgsColor="#FF5722"
+  [fgsSize]="150"
+  fastFadeOut="true"
+></ngx-ui-loader>
+<div ngxUiLoaderBlurred [blur]="4">
+  <app-navbar></app-navbar>
+  <router-outlet> </router-outlet>
+  <!-- This page content will be blurred/frosted when foreground loader is showed -->
+</div>

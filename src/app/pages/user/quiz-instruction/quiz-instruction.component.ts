@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from 'src/app/services/quiz.service';
@@ -15,6 +16,9 @@ export class QuizInstructionComponent {
 
 
   ngOnInit(): void {
+
+    this._titleService.setTitle('Quiz Instruction | Explore a World of Quizzes');
+
     this.quizId = this._route.snapshot.params['id'];
 
     this._quizService.getQuizById(this.quizId).subscribe({
@@ -30,7 +34,8 @@ export class QuizInstructionComponent {
   constructor(
     private _quizService: QuizService,
     private _route: ActivatedRoute,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _titleService: Title
   ) {}
 
   resetQuizTimer() {

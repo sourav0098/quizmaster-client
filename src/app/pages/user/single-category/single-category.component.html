@@ -40,7 +40,8 @@
           </div>
           <button
             class="btn btn-primary mt-2"
-            [routerLink]="'/quiz-instruction/' + q.quizId"
+            (click)="redirectToStartQuiz(q.quizId)"
+
           >
             Start Quiz
           </button>

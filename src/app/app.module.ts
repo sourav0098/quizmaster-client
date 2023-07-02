@@ -30,6 +30,7 @@ import { SingleCategoryComponent } from './pages/user/single-category/single-cat
 import { QuizInstructionComponent } from './pages/user/quiz-instruction/quiz-instruction.component';
 import { QuizAttemptComponent } from './pages/user/quiz-attempt/quiz-attempt.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 @NgModule({
   declarations: [
@@ -67,13 +68,17 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
       preventDuplicates: true,
     }),
     HttpClientModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({
+      showForeground: true,
+    }),
     NgCircleProgressModule.forRoot({
       // set defaults here
       outerStrokeWidth: 16,
       innerStrokeWidth: 8,
       responsive: true,
       showSubtitle: false,
-      showUnits: false
+      showUnits: false,
     }),
   ],
   providers: [authInterceptorProviders],
