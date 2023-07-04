@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-12">
-      <h5 class="mb-0">Read the instructions carefully</h5>
+      <h5 class="mb-0">Read The Instructions Carefully</h5>
       <small class="text-muted">One more step to go</small>
       <hr />
     </div>
@@ -11,6 +11,21 @@
     </div>
     <div class="col-12">
       <h5>Important Instructions</h5>
+      <ul>
+        <li>
+          Please do not refresh the page during quiz. Refreshing the page may
+          result in getting new questions and losing the chosen answers
+        </li>
+        <li>
+          Going back is not allowed during quiz. Please answer the questions
+          before submitting
+        </li>
+        <li>
+          Excessive switching between tabs or windows may result in quiz auto
+          submission
+        </li>
+      </ul>
+      <h5>Quiz Instructions</h5>
       <ul>
         <li>The quiz consists of multiple-choice questions</li>
         <li>Each question has four options, labeled A, B, C, and D</li>
@@ -46,6 +61,7 @@
           are ready
         </li>
       </ul>
+
       <button
         class="btn btn-primary btn-sm"
         [routerLink]="'/quiz/' + quiz.quizId + '/attempt'"

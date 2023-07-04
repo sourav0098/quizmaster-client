@@ -20,24 +20,50 @@ export class CategoriesComponent {
   categories: Category[] = [];
   confirmDeleteCategoryId: string = '';
 
+  // Infinite scroll variables
+  page: number = 0;
+  pageSize: number = 15;
+  lastPage: boolean = false;
+
   constructor(
     private _categoryService: CategoryService,
     private _toastr: ToastrService,
-    private _titleService: Title
+    private _titleService: Title,
   ) {}
 
   ngOnInit(): void {
     this._titleService.setTitle('Categories | Admin Dashboard');
 
-    this._categoryService.getAllCategories(0, 10).subscribe({
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    if (this.lastPage) {
+      return; // Do not make additional requests if it's the last page
+    }
+
+    this._categoryService.getAllCategories(this.page, this.pageSize).subscribe({
       next: (res: any) => {
-        this.categories = res?.content;
-        console.log(res);
+        const newCategories = res?.content;
+        this.categories = [...this.categories, ...newCategories];
+
+        if (res?.lastPage == true) {
+          this.lastPage = true;
+        }
       },
       error: (err) => {
-        console.log(err);
+        this._toastr.error(
+          'Something went wrong! Unable to fetch categories'
+        );
       },
     });
+  }
+
+  onScroll(): void {
+    if (!this.lastPage) {
+      this.page++;
+      this.loadCategories();
+    }
   }
 
   confirmDelete(id: string) {

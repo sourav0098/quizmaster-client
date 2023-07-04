@@ -70,6 +70,11 @@ export class AddQuestionModalComponent {
         next: (res) => {
           document.getElementById('close-add-question-modal')?.click();
           this.questionEmitter.emit(res); // Emit the res value to the parent
+          this.addQuestionForm.reset();
+          // add quiz Id in form again
+          this.addQuestionForm.patchValue({
+            quizId: this.quizId,
+          });
           this._toastr.success('Question added successfully');
         },
         error: (err) => {

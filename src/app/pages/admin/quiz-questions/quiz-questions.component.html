@@ -41,7 +41,10 @@
 
     <div class="card mb-3" *ngFor="let q of questions; let i = index">
       <div class="card-body">
-        <h5 class="card-title">{{ i + 1 }}) {{ q?.question }}</h5>
+        <h5 class="card-title">
+          <span style="display: inline-block">{{ i + 1 }})&nbsp;</span>
+          <span style="display: inline-block" [innerHTML]="q?.question"></span>
+        </h5>
         <div class="row">
           <div class="col-md-6">
             <small> a) {{ q?.option1 }} </small>

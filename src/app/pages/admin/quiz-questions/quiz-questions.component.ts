@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from 'src/app/services/question.service';
@@ -25,7 +25,8 @@ export class QuizQuestionsComponent {
     private _questionService: QuestionService,
     private _quizService: QuizService,
     private _toastr: ToastrService,
-    private _titleService: Title
+    private _titleService: Title,
+    private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +61,10 @@ export class QuizQuestionsComponent {
         }
       },
     });
+  }
+
+  sanitizeQuestionHtml(question: string): any {
+    return this._sanitizer.bypassSecurityTrustHtml(question);
   }
 
   onAddQuestion(res: any) {

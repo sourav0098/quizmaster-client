@@ -15,7 +15,13 @@
     </div>
   </div>
   <div class="container">
-    <div class="row">
+    <div
+      class="row"
+      infinite-scroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()"
+    >
       <div class="col-md-12 mb-3" *ngFor="let q of quizzes">
         <div class="card">
           <div class="card-body">

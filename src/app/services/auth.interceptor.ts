@@ -1,37 +1,61 @@
+import { Injectable } from '@angular/core';
 import {
-    HTTP_INTERCEPTORS,
-  HttpEvent,
-  HttpHandler,
   HttpInterceptor,
   HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpErrorResponse,
+  HTTP_INTERCEPTORS,
+  HttpHeaders,
+  HttpClient,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { ToastrService } from 'ngx-toastr'; // Replace 'ngx-toastr' with the actual library you are using
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private _authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private _http: HttpClient,
+    private _router: Router,
+    private toastrService: ToastrService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // add jwt token to request headers
-    const token = this._authService.getTokenFromLocalStorage();
-    
-    if (token != null) {
-      // Clone the request and add the access token to the headers
-      const authReq = req.clone({
-        headers: req.headers.set("Authorization", `Bearer ${token.accessToken}`),
-      });
+    const token = this.authService.getTokenFromLocalStorage();
 
-      // Pass the modified request with the access token to the next interceptor or HttpHandler
-      return next.handle(authReq);
+    if (token) {
+      req = this.addTokenToHeader(req, token.accessToken);
     }
 
-    // If the token is null, proceed with the original request
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.authService.logoutUser();
+          this._router.navigate(['/login']);
+          this.toastrService.error('Session expired. Please log in again.');
+        }
+
+        return throwError(() => error);
+      })
+    );
+  }
+
+  private addTokenToHeader(
+    req: HttpRequest<any>,
+    token: string
+  ): HttpRequest<any> {
+    return req.clone({
+      headers: req.headers
+        .set('Authorization', 'Bearer ' + token)
+        .set('Content-Type', 'application/json'),
+    });
   }
 }
 

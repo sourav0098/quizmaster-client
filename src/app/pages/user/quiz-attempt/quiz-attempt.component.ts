@@ -1,5 +1,5 @@
 import { Component, HostListener } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from 'src/app/services/question.service';
@@ -32,6 +32,10 @@ export class QuizAttemptComponent {
   // timer key for local storage
   timerKey: string = 'quizTimer';
 
+  // tab switch count
+  private tabSwitchCount = 0;
+  private readonly maxTabSwitchCount = 2;
+
   marksGot: number = 0;
   correctAnswers: number = 0;
   questionsAttempted: number = 0;
@@ -58,8 +62,30 @@ export class QuizAttemptComponent {
     }
   }
 
+  @HostListener('window:focus', ['$event'])
+  windowFocusHandler() {
+    if (!this.isQuizSubmitted) {
+      this.tabSwitchCount++;
+
+      if (this.tabSwitchCount > this.maxTabSwitchCount) {
+        this.tabSwitchCount = 0;
+        this._toastr.info(
+          'Quiz auto submitted due to excessive switching between tabs or windows'
+        );
+        this.submitQuiz();
+      } else {
+        this._toastr.warning(
+          'Excessive switching between tabs or windows may result in quiz auto submission',
+          'Warning'
+        );
+      }
+    }
+  }
+
   ngOnInit(): void {
     this._titleService.setTitle('Loading Questions...');
+
+    this.tabSwitchCount = 0;
 
     this.quizId = this._route.snapshot.params['id'];
 
@@ -85,23 +111,25 @@ export class QuizAttemptComponent {
       },
     });
 
-    this._questionService.getQuestionbyQuizForUser(this.quizId).subscribe({
-      next: (res: any) => {
-        this.questions = res?.content;
+    this._questionService
+      .getQuestionbyQuizForUser(this.quizId)
+      .subscribe({
+        next: (res: any) => {
+          this.questions = res?.content;
 
-        this.quizAttemptForm = this.questions.map((q: any) => {
-          return {
-            questionId: q.questionId,
-            givenAnswer: '',
-          };
-        });
+          this.quizAttemptForm = this.questions.map((q: any) => {
+            return {
+              questionId: q.questionId,
+              givenAnswer: '',
+            };
+          });
 
-        this.startTimer(); // Start the timer
-      },
-      error: (err) => {
-        this._toastr.error('Something went wrong, unable to load questions');
-      },
-    });
+          this.startTimer(); // Start the timer
+        },
+        error: (err) => {
+          this._toastr.error('Something went wrong, unable to load questions');
+        },
+      });
   }
 
   constructor(
@@ -109,8 +137,13 @@ export class QuizAttemptComponent {
     private _toastr: ToastrService,
     private _questionService: QuestionService,
     private _quizService: QuizService,
-    private _titleService: Title
+    private _titleService: Title,
+    private sanitizer: DomSanitizer
   ) {}
+
+  sanitizeQuestionHtml(question: string): any {
+    return this.sanitizer.bypassSecurityTrustHtml(question);
+  }
 
   submitQuiz() {
     this._questionService.evaluateQuiz(this.quizAttemptForm).subscribe({
@@ -120,9 +153,7 @@ export class QuizAttemptComponent {
         this.questionsAttempted = res?.questionsAttempted;
         this.isQuizSubmitted = true;
 
-        this._titleService.setTitle(
-          'Congratulations! Quiz Completed'
-        );
+        this._titleService.setTitle('Congratulations! Quiz Completed');
       },
       error: (err) => {
         this._toastr.error('Something went wrong, unable to evaluate quiz');

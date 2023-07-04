@@ -7,13 +7,19 @@
     </div>
   </div>
 
-  <div class="row">
+  <div
+    class="row"
+    infinite-scroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="500"
+    (scrolled)="onScroll()"
+  >
     <!-- If no quiz found -->
     <div class="col" *ngIf="quizzes.length == 0">
       <h3 class="text-center mt-3">No quiz found for this category</h3>
     </div>
 
-    <div class="col" *ngFor="let q of quizzes">
+    <div class="col-12 mb-3" *ngFor="let q of quizzes">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ q.title }}</h5>
@@ -41,7 +47,6 @@
           <button
             class="btn btn-primary mt-2"
             (click)="redirectToStartQuiz(q.quizId)"
-
           >
             Start Quiz
           </button>

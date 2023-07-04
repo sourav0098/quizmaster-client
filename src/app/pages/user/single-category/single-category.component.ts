@@ -17,15 +17,22 @@ export class SingleCategoryComponent {
   category: any = {};
   quizzes: any = [];
 
+  // Infinite scroll variables
+  page: number = 0;
+  pageSize: number = 9;
+  lastPage: boolean = false;
+
   ngOnInit(): void {
     this.categoryId = this._route.snapshot.params['id'];
 
     this._titleService.setTitle('Loading Category..');
 
     this._categoryService.getCategoryById(this.categoryId).subscribe({
-      next: (response:any) => {
+      next: (response: any) => {
         this.category = response;
-        this._titleService.setTitle(response?.title+" | Explore a World of Quizzes");
+        this._titleService.setTitle(
+          response?.title + ' | Explore a World of Quizzes'
+        );
       },
       error: (err) => {
         this._toastr.error(
@@ -34,17 +41,7 @@ export class SingleCategoryComponent {
       },
     });
 
-
-    this._quizService.getActiveQuizByCategoryId(this.categoryId).subscribe({
-      next: (res: any) => {
-        this.quizzes = res?.content;
-      },
-      error: (err) => {
-        this._toastr.error(
-          'Something went wrong, unable to load quizzes for this category'
-        );
-      },
-    });
+    this.loadActiveQuizByCategory();
   }
 
   constructor(
@@ -62,6 +59,37 @@ export class SingleCategoryComponent {
       this._router.navigate(['quiz-instruction/' + quizId]);
     } else {
       this._toastr.error('Please login to start quiz');
+    }
+  }
+
+  loadActiveQuizByCategory() {
+    if (this.lastPage) {
+      return; // Do not make additional requests if it's the last page
+    }
+
+    this._quizService
+      .getActiveQuizByCategoryId(this.categoryId, this.page, this.pageSize)
+      .subscribe({
+        next: (res: any) => {
+          const newQuizzes = res?.content;
+          this.quizzes = [...this.quizzes, ...newQuizzes];
+
+          if (res?.lastPage == true) {
+            this.lastPage = true;
+          }
+        },
+        error: (err) => {
+          this._toastr.error(
+            'Something went wrong! Unable to fetch categories'
+          );
+        },
+      });
+  }
+
+  onScroll() {
+    if (!this.lastPage) {
+      this.page++;
+      this.loadActiveQuizByCategory();
     }
   }
 }

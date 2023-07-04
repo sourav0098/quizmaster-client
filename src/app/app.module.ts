@@ -31,6 +31,7 @@ import { QuizInstructionComponent } from './pages/user/quiz-instruction/quiz-ins
 import { QuizAttemptComponent } from './pages/user/quiz-attempt/quiz-attempt.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -63,9 +64,10 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
     FormsModule,
     ReactiveFormsModule,
     CKEditorModule,
+    InfiniteScrollModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
+      preventDuplicates: true
     }),
     HttpClientModule,
     NgxUiLoaderModule,

@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_ENDPOINTS } from './api.endpoints';
 import { ROLES } from '../utils/roles';
+import { Observable } from 'rxjs';
 
 interface loginData {
   email: string;
